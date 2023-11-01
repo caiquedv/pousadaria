@@ -9,7 +9,25 @@
     <%= stylesheet_link_tag "application" %>
   </head>
 
+  <header>
+    <h1><%= link_to InnSight, root_path %></h1>
+    <nav>
+    <% if user_signed_in? %>
+      <%= current_user.description %>
+      <%= button_to 'Sair', destroy_user_session_path, method: :delete %>
+    <% else %>
+      <%= link_to 'Entrar', new_user_session_path %>
+    <% end %>
+    </nav>
+  </header>
+  
   <body>
-    <%= yield %>
+    <main>
+      <div>
+        <%= notice %>
+        <%= alert %>
+      </div>
+      <%= yield %>
+    </main>
   </body>
 </html>

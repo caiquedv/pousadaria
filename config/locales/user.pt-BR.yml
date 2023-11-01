@@ -1,0 +1,11 @@
+pt-BR:
+  host: 'Anfitrião'
+  guest: 'Hóspede'
+  activerecord:
+    models:
+      user: 'Usuário'
+    attributes:
+      user:
+        name: 'Nome'
+        role: 'Tipo de conta'
+          
