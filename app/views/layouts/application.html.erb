@@ -10,11 +10,16 @@
   </head>
 
   <header>
-    <h1><%= link_to InnSight, root_path %></h1>
     <nav>
+      <h1><%= link_to InnSight, root_path %></h1>
     <% if user_signed_in? %>
       <%= current_user.description %>
-      <%= button_to 'Sair', destroy_user_session_path, method: :delete %>
+
+      <% if current_user.host? && current_user.guesthouse %>
+        <%= link_to 'Minha Pousada', guesthouse_path(current_user.guesthouse.id) %>
+      <% end %>
+      
+      <%= button_to 'Sair', destroy_user_session_path, method: :delete %> 
     <% else %>
       <%= link_to 'Entrar', new_user_session_path %>
     <% end %>

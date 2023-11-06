@@ -1,0 +1,18 @@
+<h2>Detalhes da Pousada</h2>
+
+<div>
+  <strong>Nome:</strong> <%= @guesthouse.brand_name %> <br>
+  <strong>Descrição:</strong> <%= @guesthouse.description %> <br>
+  <strong>Local:</strong> <%= @guesthouse.city %> - <%= @guesthouse.state %> <br>
+  <strong><%= @guesthouse.handle_accepts_pets %></strong> <br>
+  <strong>Check In:</strong> <%= @guesthouse.formatted_check_in %> <br>
+  <strong>Check Out:</strong> <%= @guesthouse.formatted_check_out %> <br>
+  <strong>Forma de Pagamento:</strong> 
+  <% @guesthouse.payment_methods.each do |method| %>
+    <%= method.name %>
+  <% end %>
+</div>
+
+<% if current_user.guesthouse == @guesthouse %>
+  <%= link_to 'Editar', edit_guesthouse_path(@guesthouse.id) %>
+<% end %>

@@ -1,0 +1,14 @@
+<h2>Pousadas</h2>
+
+<% @guesthouses.each do |guesthouse| %>
+<div>
+  <dl>
+    <dt>Nome:</dt>
+    <dd><%= guesthouse.brand_name %></dd>
+    <dt>Local:</dt>
+    <dd><%= guesthouse.city %> - <%= guesthouse.state %></dd>
+    <dt>Descrição:</dt>
+    <dd><%= guesthouse.description %></dd>
+  </dl>
+</div>
+<% end %>

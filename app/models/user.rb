@@ -3,6 +3,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :rememberable, :validatable
   
+  has_one :guesthouse
+
   validates :name, :role, presence: true
 
   after_initialize :set_default_role, if: :new_record?
