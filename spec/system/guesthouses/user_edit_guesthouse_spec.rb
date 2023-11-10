@@ -9,10 +9,10 @@ describe 'User edit guesthouse' do
       brand_name: 'Cantinho no mato', corporate_name: 'Pousada XYZ', tax_code: '25.443.218/0001-41', phone: '11 9999',
       email: 'xyz@pousada.com', address: 'Rua do xyz, 10', district: 'Bairro do xyz', state: 'MT', city: 'Campo Verde',
       postal_code: '78840-000', description: 'Uma pousada no meio do mato', accepts_pets: true, active: true,
-      usage_policy: 'Uma política de uso bem legal', check_in: '14:00', check_out: '12:00', user_id: host.id
+      usage_policy: 'Uma política de uso bem legal', check_in: '14:00', check_out: '12:00', user: host
     )
 
-    PaymentMethod.create!(name: 'Débito')
+    PaymentMethod.create!(name: 'Débito') # tornar obrigartorio no cadastro <---------
     PaymentMethod.create!(name: 'Dinheiro')
 
     # Act

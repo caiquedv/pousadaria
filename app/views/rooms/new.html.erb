@@ -1,0 +1,64 @@
+<%= form_with(model: [@guesthouse, @room]) do |f| %>
+<div>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+
+<div>
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+</div>
+
+<div>
+  <%= f.label :dimension %>
+  <%= f.number_field :dimension %>
+</div>
+
+<div>
+  <%= f.label :capacity %>
+  <%= f.number_field :capacity %>
+</div>
+
+<div>
+  <%= f.label :daily_rate %>
+  <%= f.number_field :daily_rate %>
+</div>
+
+<div>
+  <%= f.label :bathroom %>
+  <%= f.select :bathroom, [['Sim', true], ['Não', false]] %>
+</div>
+
+<div>
+  <%= f.label :balcony %>
+  <%= f.select :balcony, [['Sim', true], ['Não', false]] %>
+</div>
+
+<div>
+  <%= f.label :air_conditioning %>
+  <%= f.select :air_conditioning, [['Sim', true], ['Não', false]] %>
+</div>
+
+<div>
+  <%= f.label :television %>
+  <%= f.select :television, [['Sim', true], ['Não', false]] %>
+</div>
+
+<div>
+  <%= f.label :closet %>
+  <%= f.select :closet, [['Sim', true], ['Não', false]] %>
+</div>
+
+<div>
+  <%= f.label :safe %>
+  <%= f.select :safe, [['Sim', true], ['Não', false]] %>
+</div>
+
+<div>
+  <%= f.label :accessibility %>
+  <%= f.select :accessibility, [['Sim', true], ['Não', false]] %>
+</div>
+
+<%= f.submit 'Salvar' %>
+
+<% end %>

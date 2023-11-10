@@ -11,8 +11,20 @@
   <% @guesthouse.payment_methods.each do |method| %>
     <%= method.name %>
   <% end %>
-</div>
+</div> <br>
+
+<% @guesthouse.rooms.all_active.each do |room| %>
+  <div>
+    <%= link_to "Quarto #{room.name}", guesthouse_room_path(@guesthouse.id, room.id) %> <br>
+    Descrição: <%= room.description %>
+    Capacidade: <%= room.capacity %> pessoas
+  </div>
+
+<% end %>
+
+<br>
 
 <% if current_user.guesthouse == @guesthouse %>
   <%= link_to 'Editar', edit_guesthouse_path(@guesthouse.id) %>
+  <%= link_to 'Cadastrar quarto', new_guesthouse_room_path(@guesthouse.id) %>
 <% end %>

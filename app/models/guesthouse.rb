@@ -1,6 +1,7 @@
 class Guesthouse < ApplicationRecord
   has_many :guesthouses_payment_methods
   has_many :payment_methods, through: :guesthouses_payment_methods
+  has_many :rooms, dependent: :destroy
   belongs_to :user
 
   validates :user_id, uniqueness: true

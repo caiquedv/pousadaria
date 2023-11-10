@@ -1,0 +1,10 @@
+{
+    "contexts": {
+        "test": [
+            "app/controllers/application_controller.rb"
+        ]
+    },
+    "configs": {
+        "showFolders": false
+    }
+}
