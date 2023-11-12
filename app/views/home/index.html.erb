@@ -13,3 +13,9 @@
     <p><%= guesthouse.city %></p>
   </div>
 <% end %>
+
+<div class="city-menu">
+  <% @guesthouses.each do |guesthouse| %>
+    <%= link_to guesthouse.city, city_guesthouses_path(guesthouse.city.parameterize) %>
+  <% end %>
+</div>

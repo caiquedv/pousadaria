@@ -1,0 +1,8 @@
+<h2>Pousadas em <%= @city_name %></h2>
+<div class="guesthouse-list">
+  <% @guesthouses.each do |guesthouse| %>
+    <div class="guesthouse-listing">
+      <%= link_to guesthouse.brand_name, guesthouse_path(guesthouse) %>      
+    </div>
+  <% end %>
+</div>

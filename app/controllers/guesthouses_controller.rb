@@ -41,6 +41,11 @@ class GuesthousesController < ApplicationController
     end
   end
 
+  def city
+    @city_name = params[:city_slug].split('-').join(' ').titleize
+    @guesthouses = Guesthouse.where(city: @city_name, active: true).order(brand_name: :asc) 
+  end
+
   private
 
   def set_guesthouse

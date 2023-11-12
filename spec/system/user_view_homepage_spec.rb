@@ -38,6 +38,7 @@ describe 'User visits home page' do
     end
 
     visit root_path
+    
     expect(page).to have_selector('div.recent-guesthouse', count: 3)
     expect(page).to have_content 'Pousada 3'
     expect(page).to have_content 'Pousada 2'
@@ -60,12 +61,63 @@ describe 'User visits home page' do
     end
 
     visit root_path
+    
     expect(page).not_to have_content 'Pousada 1'
     expect(page).not_to have_content 'Pousada 3'
     expect(page).to have_content 'Pousada 2'
     expect(page).to have_content 'Pousada 0'
   end
+  
+  context 'city menu' do  
+    it 'sees a city menu' do
+      # Arrange
+      ['Cidade A', 'Cidade B', 'Cidade C'].each_with_index do |city, index|
+        user = User.create!(email: "#{city.downcase.gsub(' ', '')}@example.com", 
+                            password: 'password', name: "Host #{city}", role: :host)
+    
+        Guesthouse.create!(
+          brand_name: "Pousada em #{city}", corporate_name: "Corp #{city}", tax_code: "123456789", 
+          phone: "123456789", email: "contact@#{city.downcase.gsub(' ', '')}.com", address: "Rua Principal, 1",
+          district: "Centro", state: "Estado", city: city, postal_code: "12345-678", 
+          description: "Descrição da Pousada em #{city}", accepts_pets: true, active: index != 2, 
+          usage_policy: "Uso permitido", check_in: Time.now, check_out: Time.now, user: user
+        )
+      end
+    
+      # Act
+      visit root_path
+    
+      # Assert
+      expect(page).to have_selector('div.city-menu')
+      expect(page).to have_content('Cidade A')
+      expect(page).to have_content('Cidade B')
+      expect(page).not_to have_content('Cidade C')
+    end
+    
 
+    it 'and allows selection' do
+      # Arrange
+      ['Cidade A', 'Cidade B', 'Cidade C'].each do |city|
+        user = User.create!(email: "#{city.downcase.gsub(' ', '')}@example.com", 
+                            password: 'password', name: "Host #{city}", role: :host)
+
+        Guesthouse.create!(
+          brand_name: "Pousada em #{city}", corporate_name: "Corp #{city}", tax_code: "123456789", 
+          phone: "123456789", email: "contact@#{city.downcase.gsub(' ', '')}.com", address: "Rua Principal, 1",
+          district: "Centro", state: "Estado", city: city, postal_code: "12345-678", 
+          description: "Descrição da Pousada em #{city}", accepts_pets: true, active: true, 
+          usage_policy: "Uso permitido", check_in: Time.now, check_out: Time.now, user: user
+        )
+      end
+
+      # Act
+      visit root_path
+      click_on 'Cidade A'
+
+      # Assert      
+      expect(current_path).to eq city_guesthouses_path('cidade-a')
+    end
+  end
 
   # it 'and sees a list of only active guesthouses' do 
   #   # Arrange
