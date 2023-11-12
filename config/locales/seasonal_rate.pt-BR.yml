@@ -1,0 +1,10 @@
+pt-BR:
+  activerecord:
+    models:
+      seasonal_rate:
+    attributes:
+      seasonal_rate:
+        description: Descrição
+        start_date: Data Inicial
+        end_date: Data Final
+        daily_rate: Valor da diária

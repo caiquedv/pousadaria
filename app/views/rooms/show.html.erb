@@ -17,4 +17,20 @@
 
 <% if current_user.guesthouse == @room.guesthouse %>
   <%= link_to 'Editar', edit_room_path(@room.id) %>
+<br>
+
+<h2>Preços por Período</h2>
+
+<% @room.seasonal_rates.each do |s_rate| %>
+
+  <div>
+    Descrição: <%= s_rate.description %> | de <%= formatted_date(s_rate.start_date) %> até <%= formatted_date(s_rate.end_date) %> | R$ 200.0
+  </div>
+
+<% end %>
+
+<br><br>
+
+<%= link_to 'Adicionar preço', new_room_seasonal_rate_path(@room.id) %>
+
 <% end %>

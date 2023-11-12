@@ -6,5 +6,7 @@ Rails.application.routes.draw do
     resources :rooms, only: [:new, :create, :show]
   end
 
-  resources :rooms, only: [:edit, :update]
+  resources :rooms, only: [:index, :edit, :update] do 
+    resources :seasonal_rates, only: [:new, :create]
+  end
 end

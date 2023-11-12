@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :rememberable, :validatable
   
   has_one :guesthouse, dependent: :destroy
+  has_many :rooms, through: :guesthouse
 
   validates :name, :role, presence: true
 

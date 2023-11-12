@@ -43,13 +43,13 @@ describe 'User view guesthouse details' do
 
     room = Room.create!(
       name: 'Diamante', description: 'Quarto grande com duas camas de casal e uma de solteiro', 
-      dimension: 40, capacity: 5, daily_rate: 20, bathroom: true, balcony: true, air_conditioning: true, 
+      dimension: 40, capacity: 5, daily_rate: 200, bathroom: true, balcony: true, air_conditioning: true, 
       television: true, closet: true, safe: true, accessibility: true, guesthouse: guesthouse, active: true
     )
 
     room = Room.create!(
       name: 'Ruby', description: 'Quarto médio com uma cama de casal', 
-      dimension: 30, capacity: 2, daily_rate: 15, bathroom: false, balcony: false, air_conditioning: false, 
+      dimension: 30, capacity: 2, daily_rate: 150, bathroom: false, balcony: false, air_conditioning: false, 
       television: false, closet: false, safe: false, accessibility: false, guesthouse: guesthouse, active: false
     )
 
@@ -62,8 +62,10 @@ describe 'User view guesthouse details' do
     expect(page).to have_content 'Quarto Diamante'
     expect(page).to have_content 'Descrição: Quarto grande com duas camas de casal e uma de solteiro'
     expect(page).to have_content 'Capacidade: 5 pessoas'
+    expect(page).to have_content 'Valor da diária: R$ 200.0'
     expect(page).not_to have_content 'Quarto Ruby'
     expect(page).not_to have_content 'Descrição: Quarto médio com uma cama de casal'
     expect(page).not_to have_content 'Capacidade: 2 pessoas'
+    expect(page).not_to have_content 'Valor da diária: R$ 150.0'
   end
 end

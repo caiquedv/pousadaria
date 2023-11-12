@@ -18,6 +18,7 @@
     <%= link_to "Quarto #{room.name}", guesthouse_room_path(@guesthouse.id, room.id) %> <br>
     Descrição: <%= room.description %>
     Capacidade: <%= room.capacity %> pessoas
+    Valor da diária: R$ <%= room.daily_rate %>
   </div>
 
 <% end %>
