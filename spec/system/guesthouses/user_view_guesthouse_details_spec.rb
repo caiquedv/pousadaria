@@ -68,4 +68,26 @@ describe 'User view guesthouse details' do
     expect(page).not_to have_content 'Capacidade: 2 pessoas'
     expect(page).not_to have_content 'Valor da diária: R$ 150.0'
   end
+
+  it 'by clicking on its name on the home screen' do
+    user = User.create!(email: 'host@example.com', password: 'password', name: 'Host', role: :host)
+
+    guesthouse = Guesthouse.create!(
+      brand_name: 'Pousada Teste', corporate_name: 'Corporate Teste', tax_code: '00.000.000/0001-00',
+      phone: '11 99999-0000', email: 'pousada@example.com', address: 'Endereço Teste',
+      district: 'Bairro Teste', state: 'Estado Teste', city: 'Cidade Teste', postal_code: '00000-000',
+      description: 'Descrição da Pousada Teste', accepts_pets: true, active: true, usage_policy: 'Política de Uso Teste',
+      check_in: Time.now, check_out: Time.now, user: user
+    )
+
+    visit root_path
+    click_on 'Pousada Teste'
+    expect(current_path).to eq guesthouse_path(guesthouse)
+    expect(page).to have_content 'Pousada Teste'
+    expect(page).to have_content 'Descrição da Pousada Teste'
+    expect(page).to have_content 'Cidade Teste'
+    expect(page).not_to have_content guesthouse.corporate_name
+    expect(page).not_to have_content guesthouse.tax_code
+  end
+
 end

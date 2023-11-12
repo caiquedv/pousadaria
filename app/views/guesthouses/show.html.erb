@@ -25,7 +25,7 @@
 
 <br>
 
-<% if current_user.guesthouse == @guesthouse %>
+<% if current_user && current_user.guesthouse == @guesthouse %>
   <%= link_to 'Editar', edit_guesthouse_path(@guesthouse.id) %>
   <%= link_to 'Cadastrar quarto', new_guesthouse_room_path(@guesthouse.id) %>
 <% end %>
