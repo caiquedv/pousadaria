@@ -15,7 +15,7 @@
   <strong>Acessibilidade:</strong> <%= boolean_to_human(@room.accessibility) %> <br>
 </div>
 
-<% if current_user.guesthouse == @room.guesthouse %>
+<% if current_user && current_user.guesthouse == @room.guesthouse %>
   <%= link_to 'Editar', edit_room_path(@room.id) %>
 <br>
 
