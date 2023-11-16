@@ -1,0 +1,38 @@
+<%= form_with(scope: :advanced_search, url: search_guesthouses_path, method: :get) do |f| %>
+
+  <%= f.label :district, t('activerecord.attributes.guesthouse.district') %>
+  <%= f.text_field :district %><br/>
+
+  <%= f.label :city, t('activerecord.attributes.guesthouse.city') %>
+  <%= f.text_field :city %><br/>
+
+  <%= f.label :capacity, t('activerecord.attributes.room.capacity') %>
+  <%= f.number_field :capacity %><br/>
+
+  <%= f.label :accepts_pets, t('activerecord.attributes.guesthouse.accepts_pets') %>
+  <%= f.check_box :accepts_pets %><br/>
+
+  <%= f.label :bathroom, t('activerecord.attributes.room.bathroom') %>
+  <%= f.check_box :bathroom %><br/>
+
+  <%= f.label :balcony, t('activerecord.attributes.room.balcony') %>
+  <%= f.check_box :balcony %><br/>
+
+  <%= f.label :air_conditioning, t('activerecord.attributes.room.air_conditioning') %>
+  <%= f.check_box :air_conditioning %><br/>
+
+  <%= f.label :television, t('activerecord.attributes.room.television') %>
+  <%= f.check_box :television %><br/>
+
+  <%= f.label :closet, t('activerecord.attributes.room.closet') %>
+  <%= f.check_box :closet %><br/>
+
+  <%= f.label :safe, t('activerecord.attributes.room.safe') %>
+  <%= f.check_box :safe %><br/>
+
+  <%= f.label :accessibility, t('activerecord.attributes.room.accessibility') %>
+  <%= f.check_box :accessibility %><br/>
+
+  <%= f.submit "Buscar" %>
+
+<% end %>

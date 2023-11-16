@@ -23,6 +23,17 @@
     <% else %>
       <%= link_to 'Entrar', new_user_session_path %>
     <% end %>
+
+    <div class="search-bar">
+      <% unless current_page?(advanced_search_guesthouses_path) %>
+        <%= form_with(url: search_guesthouses_path, method: :get) do |f| %>
+          <%= f.text_field :query, placeholder: "Busca" %>
+          <%= f.submit "Buscar" %>
+        <% end %>
+      <% end %>
+
+      <%= link_to 'Busca Avançada', advanced_search_guesthouses_path %>
+    </div>
     </nav>
   </header>
   

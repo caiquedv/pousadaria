@@ -1,0 +1,6 @@
+
+<div class="guesthouse-list">
+  <% @guesthouses.each do |guesthouse| %>
+    <%= link_to guesthouse.brand_name, guesthouse_path(guesthouse) %>
+  <% end %>
+</div>

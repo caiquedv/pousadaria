@@ -1,6 +1,7 @@
-class GuesthousesController < ApplicationController
+class GuesthousesController < ApplicationController  
   before_action :set_guesthouse, only: [:show, :edit, :update]
   before_action :check_ownership, only: [:edit, :update]
+
   skip_before_action :check_guesthouse_registration, only: [:new, :create]
   
   def new
@@ -16,7 +17,7 @@ class GuesthousesController < ApplicationController
 
     @guesthouse = Guesthouse.new(guesthouse_params)
     @guesthouse.user_id = current_user.id
-    # @guesthouse = current_user.build_guesthouse(guesthouse_params)
+
     if @guesthouse.save
       redirect_to root_path, notice: 'Pousada cadastrada com sucesso!'
     else
@@ -46,6 +47,33 @@ class GuesthousesController < ApplicationController
     @guesthouses = Guesthouse.where(city: @city_name, active: true).order(brand_name: :asc) 
   end
 
+  def search   
+    query = params[:query]
+    if query
+      @guesthouses = Guesthouse.where('brand_name LIKE ? OR district LIKE ? OR city LIKE ?', 
+                                      "%#{query}%", "%#{query}%", "%#{query}%")
+                              .order(brand_name: :asc)
+      @search_filters = ["Termo buscado: #{query}"]
+    else
+      if params[:advanced_search].values.all? { |value| value.blank? || value == '0' }
+        flash.now[:alert] = 'Nenhum filtro de busca foi selecionado.'
+        return render 'advanced_search'
+      end
+
+      @advanced_search = AdvancedSearch.new(search_params)
+      @guesthouses = @advanced_search.search_guesthouses       
+      @search_filters = ["Filtros ativos:"] + active_filters(search_params)
+    end
+
+      @search_phrase = '1 registro encontrado' if @guesthouses.count == 1
+      @search_phrase = "#{@guesthouses.count} registros encontrados" if @guesthouses.count > 1
+      @search_phrase = 'Nenhum resultado para o termo' if @guesthouses.count == 0      
+  end
+
+  def advanced_search
+  
+  end
+
   private
 
   def set_guesthouse
@@ -72,5 +100,40 @@ class GuesthousesController < ApplicationController
 
   def load_payment_methods
     @payment_methods = PaymentMethod.all
+  end
+
+  def search_params
+    params.require(:advanced_search).permit(
+      :city, :district, :capacity, :accepts_pets, 
+      :bathroom, :balcony, :air_conditioning, 
+      :television, :closet, :safe, :accessibility
+    )
+  end
+
+  def active_filters(search_params)
+    filters = []
+  
+    search_params.each do |key, value|
+      next if value.blank? || value == '0'
+      if Guesthouse.attribute_names.include?(key)
+        if key == 'accepts_pets'
+          filter_text = I18n.t("activerecord.attributes.guesthouse.#{key}") 
+        else
+          label = I18n.t("activerecord.attributes.guesthouse.#{key}")
+          filter_text = "#{label}: #{value}"          
+        end
+      elsif Room.attribute_names.include?(key)      
+        if key == 'capacity'
+          label = I18n.t("activerecord.attributes.room.#{key}") 
+          filter_text = "#{label}: #{value} pessoas"
+        else
+          filter_text = I18n.t("activerecord.attributes.room.#{key}") 
+        end
+      end
+  
+      filters << filter_text
+    end
+  
+    filters
   end
 end

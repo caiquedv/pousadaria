@@ -8,11 +8,9 @@ describe 'User authenticates' do
     # Act
     visit root_path
     click_on 'Entrar'
-    within('form') do
-        fill_in 'E-mail', with: 'joao@email.com'
-        fill_in 'Senha', with: 'password'
-        click_on 'Login'
-    end
+    fill_in 'E-mail', with: 'joao@email.com'
+    fill_in 'Senha', with: 'password'
+    click_on 'Login'
 
     # Assert
     expect(page).to have_content 'Login efetuado com sucesso.'
@@ -32,9 +30,7 @@ describe 'User authenticates' do
     click_on 'Entrar'
     fill_in 'E-mail', with: 'joao@email.com'
     fill_in 'Senha', with: 'password'
-    within('form') do
-      click_on 'Login'
-    end
+    click_on 'Login'
     click_on 'Sair'
   
     # Assert

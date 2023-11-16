@@ -1,0 +1,14 @@
+<h2>Resultados da busca</h2>
+<p><%= @search_phrase %></p>
+
+<div class="active_filters">
+  <% @search_filters.each do |filter| %>
+    <p><%= filter %></p>
+  <% end %>
+</div>
+
+<div class="guesthouse-list">
+  <% @guesthouses.each do |guesthouse| %>
+    <%= link_to guesthouse.brand_name, guesthouse_path(guesthouse) %>
+  <% end %>
+</div>
