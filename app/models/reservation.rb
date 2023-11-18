@@ -2,8 +2,7 @@ class Reservation < ApplicationRecord
   belongs_to :room
 
   validates :start_date, :end_date, :guests_number, presence: true
-  validate :check_capacity
-  validate :check_availability
+  validate :check_capacity, :check_availability, :end_date_after_start_date, :start_date_after_today
   
 
   enum status: { active: 0, pending: 1, cancelled: 2 }
@@ -17,16 +16,29 @@ class Reservation < ApplicationRecord
   private
 
   def check_capacity    
-    self.guests_number = 0 if self.guests_number.nil?
-    errors.add(:base, 'O quarto não suporta a quantidade de hóspedes.') if self.guests_number > self.room.capacity
+    return if guests_number.nil?
+
+    errors.add(:base, 'O quarto não suporta a quantidade de hóspedes.') if guests_number > room.capacity
   end
 
   def check_availability
-    overlapping_reservations = Reservation.where(room_id: self.room_id)
+    overlapping_reservations = Reservation.where(room_id: room_id)
                               .where.not(status: :cancelled)
-                              .where('start_date < ? AND end_date > ?', self.end_date, self.start_date)
+                              .where('start_date < ? AND end_date > ?', end_date, start_date)
 
     errors.add(:base, 'O quarto não está disponível para o período selecionado.') if overlapping_reservations.any?
+  end
+
+  def end_date_after_start_date
+    return if start_date.blank? || end_date.blank?
+
+    errors.add(:end_date, 'Data final deve ser maior que a data inicial.') if start_date > end_date
+  end
+ 
+  def start_date_after_today
+    return if start_date.blank?
+
+    errors.add(:start_date, 'Data inicial deve ser maior que a data atual.') if start_date < Date.today
   end
 
   def calculate_total_price

@@ -138,5 +138,35 @@ RSpec.describe Reservation, type: :model do
       expect(reservation.errors[:base]).to include('O quarto não suporta a quantidade de hóspedes.')
     end
   end
+
+  describe '#end_date_after_start_date' do
+    it 'adds an error when end_date is before start_date' do
+      reservation = Reservation.new(
+        start_date: Date.today, 
+        end_date: Date.yesterday, 
+        guests_number: 4, 
+        room: room
+      )
+
+      reservation.valid?
+
+      expect(reservation.errors[:end_date]).to include('Data final deve ser maior que a data inicial.')
+    end
+  end
+
+  describe '#start_date_after_today' do
+    it 'adds an error when start_date is before today' do
+      reservation = Reservation.new(
+        start_date: Date.yesterday, 
+        end_date: Date.tomorrow, 
+        guests_number: 4, 
+        room: room
+      )
+
+      reservation.valid?
+
+      expect(reservation.errors[:start_date]).to include('Data inicial deve ser maior que a data atual.')
+    end
+  end
   
 end
