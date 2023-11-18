@@ -38,7 +38,7 @@ describe 'User register a room for your guesthouse' do
     expect(page).to have_content 'Descrição: Quarto grande com duas camas de casal e uma de solteiro'
     expect(page).to have_content 'Dimensão: 20 m2'
     expect(page).to have_content 'Capacidade: 5 pessoas'
-    expect(page).to have_content 'Valor da diária: R$ 200.0' # formatar valor <----------------------------------
+    expect(page).to have_content 'Valor da diária: R$ 200.0'
     expect(page).to have_content 'Banheiro: Sim'
     expect(page).to have_content 'Varanda: Sim'
     expect(page).to have_content 'Ar condicionado: Sim'
@@ -67,7 +67,6 @@ describe 'User register a room for your guesthouse' do
       usage_policy: 'Proíbido não se divertir', check_in: '13:00', check_out: '11:00', user: second_host
     )
 
-    # criei duas pousadas, falta logar como um user e tentar cadastrar para outro user
     # Act
     login_as second_host
     visit root_path

@@ -13,15 +13,29 @@
   <% end %>
 </div> <br>
 
-<% @guesthouse.rooms.all_active.each do |room| %>
-  <div>
-    <%= link_to "Quarto #{room.name}", guesthouse_room_path(@guesthouse.id, room.id) %> <br>
-    Descrição: <%= room.description %>
-    Capacidade: <%= room.capacity %> pessoas
-    Valor da diária: R$ <%= room.daily_rate %>
-  </div>
+<div>
+  <% if @guesthouse.rooms.all_active.any? %>
+    <h3>Quartos disponíveis</h3>
+    <% @guesthouse.rooms.all_active.each do |room| %>
 
-<% end %>
+    <strong>Nome:</strong> <%= room.name %> <br>
+    <strong>Descrição:</strong> <%= room.description %> <br>
+    <strong>Dimensão:</strong> <%= room.dimension %> m2 <br>
+    <strong>Capacidade:</strong> <%= room.capacity %> pessoas<br>
+    <strong>Banheiro:</strong> <%= boolean_to_human(room.bathroom) %> <br>
+    <strong>Varanda:</strong> <%= boolean_to_human(room.balcony) %> <br>
+    <strong>Ar condicionado:</strong> <%= boolean_to_human(room.air_conditioning) %> <br>
+    <strong>Televisão:</strong> <%= boolean_to_human(room.television) %> <br>
+    <strong>Guarda-roupas:</strong> <%= boolean_to_human(room.closet) %> <br>
+    <strong>Cofre:</strong> <%= boolean_to_human(room.safe) %> <br>
+    <strong>Acessibilidade:</strong> <%= boolean_to_human(room.accessibility) %> <br>
+    <strong>Valor da diária:</strong> R$ <%= room.daily_rate %> <br>    
+
+    <%= link_to 'Reservar', guesthouse_room_path(@guesthouse, room) %>
+
+    <% end %>
+  <% end %>
+</div>
 
 <br>
 

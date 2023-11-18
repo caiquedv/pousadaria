@@ -19,6 +19,11 @@ class RoomsController < ApplicationController
 
   def show
     @room = Room.find(params[:id])
+    @reservation = if params[:reservation]
+      Reservation.new(reservation_params)
+    else
+      Reservation.new
+    end
   end
 
   def edit
@@ -43,5 +48,9 @@ class RoomsController < ApplicationController
       :name, :description, :dimension, :capacity, :daily_rate, :bathroom,
       :balcony, :air_conditioning, :television, :closet, :safe, :accessibility
     )
+  end
+
+  def reservation_params
+    params.require(:reservation).permit(:start_date, :end_date, :guests_number, :total_price, :room_id)
   end
 end

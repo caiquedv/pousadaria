@@ -16,8 +16,6 @@ class SeasonalRatesController < ApplicationController
         render :new
       end
     end
-
-    ## acho que tem que lidar com quartoi nao encontardo mas aguarde teste
   end
 
   def seasonal_rate_params

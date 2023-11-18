@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_11_011818) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_18_144752) do
   create_table "guesthouses", force: :cascade do |t|
     t.string "brand_name"
     t.string "corporate_name"
@@ -45,6 +45,18 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_11_011818) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reservations", force: :cascade do |t|
+    t.integer "room_id", null: false
+    t.date "start_date"
+    t.date "end_date"
+    t.integer "guests_number"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "total_price", precision: 10, scale: 2
+    t.index ["room_id"], name: "index_reservations_on_room_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -95,6 +107,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_11_011818) do
   add_foreign_key "guesthouses", "users"
   add_foreign_key "guesthouses_payment_methods", "guesthouses"
   add_foreign_key "guesthouses_payment_methods", "payment_methods"
+  add_foreign_key "reservations", "rooms"
   add_foreign_key "rooms", "guesthouses"
   add_foreign_key "seasonal_rates", "rooms"
 end

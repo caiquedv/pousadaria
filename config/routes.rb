@@ -13,5 +13,8 @@ Rails.application.routes.draw do
 
   resources :rooms, only: [:index, :edit, :update] do 
     resources :seasonal_rates, only: [:new, :create]
+    resources :reservations, only: [:create]
   end
+
+  resources :reservations, only: [:create]
 end

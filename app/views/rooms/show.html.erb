@@ -14,6 +14,7 @@
   <strong>Cofre:</strong> <%= boolean_to_human(@room.safe) %> <br>
   <strong>Acessibilidade:</strong> <%= boolean_to_human(@room.accessibility) %> <br>
 </div>
+<br>
 
 <% if current_user && current_user.guesthouse == @room.guesthouse %>
   <%= link_to 'Editar', edit_room_path(@room.id) %>
@@ -33,4 +34,43 @@
 
 <%= link_to 'Adicionar preço', new_room_seasonal_rate_path(@room.id) %>
 
+<% end %>
+
+<% if @reservation %>
+
+<% if @reservation.errors.any? %>
+    <% @reservation.errors.full_messages.each do |message| %>
+      <p><%= message %></p>
+    <% end %>
+  <% end %>
+
+<% end %>
+
+<%= form_with model: [@room, @reservation], class: 'reservation' do |f| %>
+<div>
+  <%= f.label :start_date %>
+  <%= f.date_field :start_date %>
+</div>
+
+<div>
+  <%= f.label :end_date %>
+  <%= f.date_field :end_date %>
+</div>
+
+<div>
+  <%= f.label :guests_number %>
+  <%= f.number_field :guests_number, min: 1 %> 
+</div>
+
+<div>
+  <% if @reservation.total_price %>
+    <p>Total: R$ <%= @reservation.total_price %></p>
+  <% end %>
+</div>
+
+<div>
+  <%= f.hidden_field :room_id, value: @room.id %>
+</div>
+
+<%= f.submit 'Verificar Disponibilidade' %>
 <% end %>

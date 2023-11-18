@@ -1,0 +1,9 @@
+pt-BR:
+  activerecord:
+    models:
+      reservation:
+    attributes:
+      reservation:
+        start_date: Data de Entrada
+        end_date: Data de Saída
+        guests_number: Quantidade de Hóspedes
