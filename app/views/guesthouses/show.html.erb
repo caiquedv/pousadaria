@@ -18,18 +18,7 @@
     <h3>Quartos disponíveis</h3>
     <% @guesthouse.rooms.all_active.each do |room| %>
 
-    <strong>Nome:</strong> <%= room.name %> <br>
-    <strong>Descrição:</strong> <%= room.description %> <br>
-    <strong>Dimensão:</strong> <%= room.dimension %> m2 <br>
-    <strong>Capacidade:</strong> <%= room.capacity %> pessoas<br>
-    <strong>Banheiro:</strong> <%= boolean_to_human(room.bathroom) %> <br>
-    <strong>Varanda:</strong> <%= boolean_to_human(room.balcony) %> <br>
-    <strong>Ar condicionado:</strong> <%= boolean_to_human(room.air_conditioning) %> <br>
-    <strong>Televisão:</strong> <%= boolean_to_human(room.television) %> <br>
-    <strong>Guarda-roupas:</strong> <%= boolean_to_human(room.closet) %> <br>
-    <strong>Cofre:</strong> <%= boolean_to_human(room.safe) %> <br>
-    <strong>Acessibilidade:</strong> <%= boolean_to_human(room.accessibility) %> <br>
-    <strong>Valor da diária:</strong> R$ <%= room.daily_rate %> <br>    
+    <%= render 'rooms/room_details', room: room %>
 
     <%= link_to 'Reservar', guesthouse_room_path(@guesthouse, room) %>
 
