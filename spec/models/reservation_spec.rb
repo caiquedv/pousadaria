@@ -76,7 +76,7 @@ RSpec.describe Reservation, type: :model do
     SeasonalRate.create!(
       description: 'Alta temporada',
       start_date: Date.tomorrow,
-      end_date: Date.today + 7.days,
+      end_date: Date.tomorrow + 6.days,
       daily_rate: 300,
       room: room
     )
@@ -87,7 +87,7 @@ RSpec.describe Reservation, type: :model do
       it 'calculates total price based on room daily rate' do
         reservation = Reservation.new(
           start_date: Date.tomorrow + 10.days, 
-          end_date: Date.today + 12.days, 
+          end_date: Date.tomorrow + 11.days, 
           guests_number: 4, 
           room: room
         )
@@ -102,7 +102,7 @@ RSpec.describe Reservation, type: :model do
       it 'calculates total price based on seasonal rate' do
         reservation = Reservation.new(
           start_date: Date.tomorrow, 
-          end_date: Date.today + 3.days, 
+          end_date: Date.tomorrow + 2.days, 
           guests_number: 4, 
           room: room
         )
@@ -118,7 +118,7 @@ RSpec.describe Reservation, type: :model do
       it 'calculates total price correctly' do
         reservation = Reservation.new(
           start_date: Date.tomorrow, 
-          end_date: Date.today + 10.days, 
+          end_date: Date.tomorrow + 9.days, 
           guests_number: 4, 
           room: room
         )
@@ -129,7 +129,7 @@ RSpec.describe Reservation, type: :model do
         expect(reservation.total_price).to eq(expected_price)
       end
     end
-  end
+  end 
 
   describe '#check_capacity' do
     it 'adds an error if guests_number exceeds room capacity' do
@@ -140,32 +140,32 @@ RSpec.describe Reservation, type: :model do
   end
 
   describe '#end_date_after_start_date' do
-    it 'adds an error when end_date is before start_date' do
+    it 'adds an error when end_date is before or same then start_date' do
       reservation = Reservation.new(
         start_date: Date.today, 
-        end_date: Date.yesterday, 
+        end_date: Date.today - 1, 
         guests_number: 4, 
         room: room
       )
 
       reservation.valid?
 
-      expect(reservation.errors[:end_date]).to include('Data final deve ser maior que a data inicial.')
+      expect(reservation.errors[:end_date]).to include('deve ser maior que a data inicial.')
     end
   end
 
   describe '#start_date_after_today' do
     it 'adds an error when start_date is before today' do
       reservation = Reservation.new(
-        start_date: Date.yesterday, 
-        end_date: Date.tomorrow, 
+        start_date: Date.today - 1, 
+        end_date: Date.today + 1, 
         guests_number: 4, 
         room: room
       )
 
       reservation.valid?
 
-      expect(reservation.errors[:start_date]).to include('Data inicial deve ser maior que a data atual.')
+      expect(reservation.errors[:start_date]).to include('deve ser maior que a data atual.')
     end
   end
   

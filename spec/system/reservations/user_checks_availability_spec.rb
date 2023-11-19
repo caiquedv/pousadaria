@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'User books a room from the guesthouse details screen' do
+describe 'User checks availability of room from the guesthouse details screen' do
   it 'and sees room details and the period form' do
     host = User.create!(name: 'Andre', email: 'andre@email.com', password: 'password', role: 8)
 
@@ -139,7 +139,7 @@ describe 'User books a room from the guesthouse details screen' do
     fill_in 'Quantidade de Hóspedes', with: 5
     click_on 'Verificar Disponibilidade'
 
-    expect(page).to have_content 'Data final deve ser maior que a data inicial.'
+    expect(page).to have_content 'Data de Saída deve ser maior que a data inicial.'
   end
 
   it 'and de start date must be greater then today' do 
@@ -162,8 +162,8 @@ describe 'User books a room from the guesthouse details screen' do
     fill_in 'Data de Entrada', with: Date.today - 1
     fill_in 'Data de Saída', with: 7.day.from_now
     fill_in 'Quantidade de Hóspedes', with: 5
-    click_on 'Verificar Disponibilidade'
+    click_on 'Verificar Disponibilidade' 
 
-    expect(page).to have_content 'Data inicial deve ser maior que a data atual.'
-  end
+    expect(page).to have_content 'Data de Entrada deve ser maior que a data atual.'
+    end
 end
