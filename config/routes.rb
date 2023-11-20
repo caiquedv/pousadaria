@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   root "home#index"
 
   get '/guesthouses/advanced_search', to: 'guesthouses#advanced_search', as: 'advanced_search_guesthouses'
-  
   get '/guesthouses/cities/:city_slug', to: 'guesthouses#city', as: 'city_guesthouses'
   get '/guesthouses/search', to: 'guesthouses#search', as: 'search_guesthouses'
 
@@ -13,8 +12,15 @@ Rails.application.routes.draw do
 
   resources :rooms, only: [:index, :edit, :update] do 
     resources :seasonal_rates, only: [:new, :create]
-    resources :reservations, only: [:create]
+    
+    resources :reservations, only: [:new, :create]
+    get '/reservations/verify_reservation', to: 'reservations#verify_reservation', as: 'verify_reservation'
+    get '/reservations/new_reservation', to: 'reservations#reservation_with_auth', as: 'reservation_with_auth'
   end
 
-  resources :reservations, only: [:create]
+  resources :reservations, only: [:index] do 
+    member do
+      patch :cancel
+    end
+  end
 end

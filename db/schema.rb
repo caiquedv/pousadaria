@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_18_144752) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_20_163305) do
   create_table "guesthouses", force: :cascade do |t|
     t.string "brand_name"
     t.string "corporate_name"
@@ -56,7 +56,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_18_144752) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "total_price", precision: 10, scale: 2
+    t.integer "user_id", null: false
+    t.string "code"
     t.index ["room_id"], name: "index_reservations_on_room_id"
+    t.index ["user_id"], name: "index_reservations_on_user_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -100,6 +103,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_18_144752) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "role", default: 0
+    t.string "social_security_number"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -108,6 +112,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_18_144752) do
   add_foreign_key "guesthouses_payment_methods", "guesthouses"
   add_foreign_key "guesthouses_payment_methods", "payment_methods"
   add_foreign_key "reservations", "rooms"
+  add_foreign_key "reservations", "users"
   add_foreign_key "rooms", "guesthouses"
   add_foreign_key "seasonal_rates", "rooms"
 end

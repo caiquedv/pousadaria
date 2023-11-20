@@ -29,7 +29,7 @@ RSpec.describe User, type: :model do
 
   describe '#set_default_role' do
     it 'empty role is saved as guest' do       
-      user = User.create!(role: '', name: 'Erika Campos', email: 'erika@email.com', password: 'password')      
+      user = User.create!(role: '', name: 'Erika Campos', email: 'erika@email.com', password: 'password', social_security_number: '271.851.455-89')      
 
       expect(user.role).to eq 'guest'
     end

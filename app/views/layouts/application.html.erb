@@ -16,7 +16,13 @@
       <%= current_user.description %>
 
       <% if current_user.host? && current_user.guesthouse %>
+        
         <%= link_to 'Minha Pousada', guesthouse_path(current_user.guesthouse.id) %>
+
+      <% elsif current_user.guest? %>
+
+        <%= link_to 'Minhas Reservas', reservations_path %>
+
       <% end %>
       
       <%= button_to 'Sair', destroy_user_session_path, method: :delete %> 

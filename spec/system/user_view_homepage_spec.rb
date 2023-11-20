@@ -13,7 +13,7 @@ describe 'User visits home page' do
 
   context 'when guest' do
     it "and don't sees a link to my_guesthouse" do 
-      guest = User.create!(name: 'Andre', email: 'andre@email.com', password: 'password', role: 4)
+      guest = User.create!(name: 'Andre', email: 'andre@email.com', password: 'password', role: 4, social_security_number: '271.851.455-89')
 
       login_as guest
       visit root_path

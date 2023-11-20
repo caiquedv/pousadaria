@@ -80,8 +80,10 @@ describe 'User checks availability of room from the guesthouse details screen' d
       dimension: 40, capacity: 5, daily_rate: 200, bathroom: true, balcony: true, air_conditioning: true, 
       television: true, closet: true, safe: true, accessibility: true, guesthouse: guesthouse, active: true
     )
+
+    guest = User.create!(name: 'erika', email: 'erika@email.com', password: 'password', role: :guest, social_security_number: '271.851.455-89')
     
-    Reservation.create!(start_date:  1.day.from_now, end_date: 5.days.from_now, guests_number: 5, room: room)
+    Reservation.create!(start_date:  1.day.from_now, end_date: 5.days.from_now, guests_number: 5, room: room, user_id: guest.id)
 
     visit guesthouse_room_path(guesthouse, room)
     fill_in 'Data de Entrada', with: 1.day.from_now

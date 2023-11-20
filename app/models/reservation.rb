@@ -1,14 +1,20 @@
 class Reservation < ApplicationRecord
   belongs_to :room
+  belongs_to :user, optional: true
 
   validates :start_date, :end_date, :guests_number, presence: true
   validate :check_capacity, :check_availability, :end_date_after_start_date, :start_date_after_today  
 
+  before_validation :geneate_code, on: :create 
+  
   enum status: { active: 0, pending: 1, cancelled: 2 }
+  
+  attr_accessor :is_available
 
   def process_reservation
-    if valid?
+    if valid? 
       calculate_total_price
+      self.is_available = true              
     end
   end
 
@@ -16,6 +22,7 @@ class Reservation < ApplicationRecord
 
   def check_availability
     overlapping_reservations = Reservation.where(room_id: room_id)
+                              .where.not(id: id)
                               .where.not(status: :cancelled)
                               .where('start_date < ? AND end_date > ?', end_date, start_date)
 
@@ -58,4 +65,7 @@ class Reservation < ApplicationRecord
     self.total_price = total_price
   end
 
+  def geneate_code
+    self.code = SecureRandom.alphanumeric(8).upcase
+  end
 end

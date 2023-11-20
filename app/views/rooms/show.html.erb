@@ -28,6 +28,7 @@
 <% if @reservation %>
 
 <% if @reservation.errors.any? %>
+
     <% @reservation.errors.full_messages.each do |message| %>
       <p><%= message %></p>
     <% end %>
@@ -35,7 +36,7 @@
 
 <% end %>
 
-<%= form_with model: [@room, @reservation], class: 'reservation' do |f| %>
+<%= form_with model: [@room, @reservation], url: room_verify_reservation_path(@room), class: 'reservation', method: :get do |f| %>
 <div>
   <%= f.label :start_date %>
   <%= f.date_field :start_date %>
@@ -61,5 +62,18 @@
   <%= f.hidden_field :room_id, value: @room.id %>
 </div>
 
+<% if @reservation.is_available %>
+  <%= link_to 'Informações da Reserva', room_reservation_with_auth_path(
+    reservation: {
+      start_date: @reservation.start_date,  
+      end_date: @reservation.end_date,
+      guests_number: @reservation.guests_number,
+      total_price: @reservation.total_price,
+      guesthouse_id: @room.guesthouse.id  
+    }) 
+  %>
+<% end %>
+
 <%= f.submit 'Verificar Disponibilidade' %>
+
 <% end %>

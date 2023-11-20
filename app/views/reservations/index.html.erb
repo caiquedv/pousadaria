@@ -1,0 +1,29 @@
+<h2>Reservas</h2>
+
+<div>
+  <% @reservations.each do |reservation| %>
+    <dl>
+      <dt><b>Reserva:</b></dt>  
+      <dd><%= reservation.code %></dd>
+
+      <dt><b>Quarto:</b></dt>
+      <dd><%= link_to reservation.room.name, guesthouse_room_path(reservation.room.guesthouse, reservation.room) %></dd>
+
+      <dt><b>Data de Entrada:</b></dt>
+      <dd><%= reservation.start_date.strftime('%d-%m-%y') %></dd>
+
+      <dt><b>Data de Saída:</b></dt>
+      <dd><%= reservation.end_date.strftime('%d-%m-%y') %></dd>
+
+      <dt><b>Hóspedes:</b></dt>
+      <dd><%= reservation.guests_number %> Pessoas</dd>
+
+      <dt><b>Total:</b></dt>
+      <dd>R$ <%= reservation.total_price %></dd>
+
+      <div><%= button_to 'Cancelar', cancel_reservation_path(reservation), method: :patch %></div>
+    </dl>
+    <br>
+  <% end %>
+
+</div>

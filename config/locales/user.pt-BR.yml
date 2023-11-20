@@ -8,4 +8,5 @@ pt-BR:
       user:
         name: 'Nome'
         role: 'Tipo de conta'
+        social_security_number: 'CPF'
           

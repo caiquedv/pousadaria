@@ -4,7 +4,10 @@ class User < ApplicationRecord
   has_one :guesthouse, dependent: :destroy
   has_many :rooms, through: :guesthouse
 
+  has_many :reservations
+
   validates :name, :role, presence: true
+  validates :social_security_number, presence: true, if: :guest?
 
   after_initialize :set_default_role, if: :new_record?
 

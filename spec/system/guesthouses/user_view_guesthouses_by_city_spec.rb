@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'User view active guesthouses list', type: :system do
-  it 'by city in alphabetical order' do
+RSpec.describe 'User view active guesthouses list by city', type: :system do
+  it 'in alphabetical order' do
     # Arrange
     ['Z Pousada', 'A Pousada', 'M Pousada', 'Pousada Inativa'].each_with_index do |name, index|
       user = User.create!(

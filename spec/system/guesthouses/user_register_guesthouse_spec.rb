@@ -75,7 +75,7 @@ describe 'User register a guesthouse' do
 
   it 'only if user is host' do 
     # Arrange
-    user = User.create!(name: 'João', email: 'joao@email.com', password: 'password', role: 4)
+    user = User.create!(name: 'João', email: 'joao@email.com', password: 'password', role: 4, social_security_number: '271.851.455-89')
     
     # Act
     login_as(user)

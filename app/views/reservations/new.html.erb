@@ -1,0 +1,13 @@
+<h2>Resumo da reserva</h2>
+
+<div>
+  Quarto <%=  @reservation.room.name %> <br>
+  Data de Entrada: <%= @reservation.start_date.strftime("%d-%m-%y") %> <br>
+  Check-in: <%= @reservation.room.guesthouse.check_in.strftime("%H:%M") %> <br>
+  Data de Saída: <%= @reservation.end_date.strftime("%d-%m-%y") %> <br>
+  Check-out: <%= @reservation.room.guesthouse.check_out.strftime("%H:%M") %> <br>
+  Valor total: R$ <%= @reservation.total_price %> <br>
+  Métodos de pagamento: <%= @payment_methods %> <br>
+
+  <%= button_to 'Confirmar Reserva', room_reservations_path %> 
+</div>
