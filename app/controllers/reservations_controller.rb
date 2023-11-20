@@ -1,7 +1,8 @@
 class ReservationsController < ApplicationController
   
   def index
-    @reservations = Reservation.active.where(user_id: current_user.id) if current_user.guest?
+    @reservations = current_user.reservations.where.not(status: :cancelled) if current_user.guest?
+                               
   end
 
   def new
