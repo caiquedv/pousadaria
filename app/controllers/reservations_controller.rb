@@ -19,8 +19,7 @@ class ReservationsController < ApplicationController
         @title = 'Reservas'
       end
     end
-  end
-  
+  end  
 
   def new
     if session[:reservation_params]
@@ -96,8 +95,7 @@ class ReservationsController < ApplicationController
       redirect_to reservations_path
     end
     
-  end
-  
+  end  
 
   def check_in
     @reservation = Reservation.find(params[:id])
@@ -110,9 +108,32 @@ class ReservationsController < ApplicationController
     end
   end  
 
+  def check_out
+    @reservation = Reservation.find(params[:id])
+    @payment_methods = @reservation.guesthouse.payment_methods
+  end
+
+  def finish
+    @reservation = Reservation.find(params[:id])
+
+    if current_user.guesthouse == @reservation.room.guesthouse && Time.zone.today >= @reservation.start_date
+      @reservation.update(checked_out_at: Time.zone.now)
+      @reservation.update(
+        status: :finished, total_due: @reservation.finish_reservation, payment_method_id: check_out_params[:payment_method_id]
+      )
+      redirect_to reservations_path, notice: 'Check-out realizado com sucesso.'
+    else
+      flash.now[:alert] = ''
+    end
+  end
+
   private
 
   def reservation_params
     params.require(:reservation).permit(:start_date, :end_date, :guests_number, :total_price, :room_id)
+  end
+
+  def check_out_params
+    params.require(:check_out).permit(:payment_method_id)
   end
 end

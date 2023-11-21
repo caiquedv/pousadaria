@@ -1,6 +1,8 @@
 class Reservation < ApplicationRecord
   belongs_to :room
   belongs_to :user, optional: true
+  belongs_to :payment_method, optional: true
+  
   has_one :guesthouse, through: :room
 
   validates :start_date, :end_date, :guests_number, presence: true
@@ -9,7 +11,7 @@ class Reservation < ApplicationRecord
 
   before_validation :geneate_code, on: :create 
   
-  enum status: { active: 0, pending: 1, cancelled: 2 }
+  enum status: { active: 0, pending: 1, cancelled: 2, finished: 3 }
   
   attr_accessor :is_available
 
@@ -18,6 +20,10 @@ class Reservation < ApplicationRecord
       calculate_total_price
       self.is_available = true              
     end
+  end
+
+  def finish_reservation
+    calculate_total_due
   end
 
   private
@@ -66,6 +72,30 @@ class Reservation < ApplicationRecord
   
     self.total_price = total_price
   end
+
+  def calculate_total_due
+    total_due = 0
+    start_date = checked_in_at.to_date
+    end_date = checked_out_at.present? ? checked_out_at.to_date : Time.zone.now.to_date
+  
+    (start_date...end_date).each do |date|
+      daily_rate = room.daily_rate
+  
+      seasonal_rate = room.seasonal_rates.find do |s_rate|
+        date.between?(s_rate.start_date, s_rate.end_date)
+      end
+  
+      daily_rate = seasonal_rate.daily_rate if seasonal_rate.present?
+      total_due += daily_rate
+    end
+  
+    if checked_out_at.present? && checked_out_at.time > guesthouse.check_out
+      total_due += room.daily_rate
+    end
+  
+    total_due
+  end
+  
 
   def geneate_code
     self.code = SecureRandom.alphanumeric(8).upcase

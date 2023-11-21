@@ -201,7 +201,6 @@ describe 'User view reservation details' do
 
       expect(page).to have_content 'Reserva cancelada com sucesso.'
       within('h2') { expect(page).to have_content 'Reservas' }
-
       expect(Reservation.last.status).to eq 'cancelled'
       expect(page).not_to have_content "Reserva: #{Reservation.last.code}" 
     end

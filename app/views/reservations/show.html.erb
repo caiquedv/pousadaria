@@ -32,4 +32,8 @@
   <%= button_to 'Fazer Check-in', check_in_reservation_path(@reservation), method: :patch %>
 </div>
 
+<div>
+  <%= button_to 'Fazer Check-out', check_out_reservation_path(@reservation), method: :get %>
+</div>
+
 <% end %>

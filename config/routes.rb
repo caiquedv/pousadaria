@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     member do
       patch :cancel
       patch :check_in
+      get :check_out
+      patch :finish
     end
   end
 end

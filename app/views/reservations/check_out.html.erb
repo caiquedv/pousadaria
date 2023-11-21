@@ -1,0 +1,6 @@
+<%= form_with scope: :check_out, url: finish_reservation_path(@reservation), method: :patch do |f| %>
+  <%= f.label :payment_method_id, 'Métodos de Pagamento' %>
+  <%= f.select :payment_method_id, @payment_methods.map { |p_m| [p_m.name, p_m.id] } %>
+
+  <%= f.submit 'Salvar' %>
+<% end %>
