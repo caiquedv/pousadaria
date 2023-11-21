@@ -1,0 +1,35 @@
+<h2>Reserva: <%= @reservation.code %></h2>
+<dl>
+  <dt><b>Quarto:</b></dt>
+  <dd>
+    <%= link_to @reservation.room.name, guesthouse_room_path(@reservation.room.guesthouse, @reservation.room) %>
+  </dd>
+
+  <dt><b>Data de Entrada:</b></dt>
+  <dd>
+    <%= @reservation.start_date.strftime('%d-%m-%y') %> as
+    <%= @reservation.guesthouse.check_in.strftime("%H:%M") %>
+  </dd>
+
+  <dt><b>Data de Saída:</b></dt>
+  <dd>
+    <%= @reservation.end_date.strftime('%d-%m-%y') %> as
+    <%= @reservation.guesthouse.check_out.strftime("%H:%M") %>
+  </dd>
+
+  <dt><b>Hóspedes:</b></dt>
+  <dd><%= @reservation.guests_number %> Pessoas</dd>
+
+  <dt><b>Total:</b></dt>
+  <dd>R$ <%= @reservation.total_price %></dd>
+</dl>
+
+<div><%= button_to 'Cancelar', cancel_reservation_path(@reservation), method: :patch %></div>
+
+<% if current_user.host? && current_user.guesthouse == @reservation.guesthouse %>
+
+<div>
+  <%= button_to 'Fazer Check-in', check_in_reservation_path(@reservation), method: :patch %>
+</div>
+
+<% end %>

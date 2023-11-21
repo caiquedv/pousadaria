@@ -1,9 +1,11 @@
 class Reservation < ApplicationRecord
   belongs_to :room
   belongs_to :user, optional: true
+  has_one :guesthouse, through: :room
 
   validates :start_date, :end_date, :guests_number, presence: true
-  validate :check_capacity, :check_availability, :end_date_after_start_date, :start_date_after_today  
+  validate :check_capacity, :check_availability
+  validate :end_date_after_start_date, :start_date_after_today, on: :create
 
   before_validation :geneate_code, on: :create 
   

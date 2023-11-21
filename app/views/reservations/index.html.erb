@@ -1,29 +1,36 @@
-<h2>Reservas</h2>
+<h2><%= @title %></h2>
 
 <div>
-  <% @reservations.each do |reservation| %>
-    <dl>
-      <dt><b>Reserva:</b></dt>  
-      <dd><%= reservation.code %></dd>
+<% @reservations.each do |reservation| %>
+  <dl>
+    <dt><b>Reserva:</b></dt>  
+    <dd><%= link_to reservation.code, reservation_path(reservation) %></dd>
 
-      <dt><b>Quarto:</b></dt>
-      <dd><%= link_to reservation.room.name, guesthouse_room_path(reservation.room.guesthouse, reservation.room) %></dd>
+    <% if reservation.active? %>
+      <dt><b>Check-in realizado em:</b></dt>
+      <dd><%= reservation.checked_in_at.strftime("%d-%m-%y %H:%M") %></dd>
+    <% end %>
 
-      <dt><b>Data de Entrada:</b></dt>
-      <dd><%= reservation.start_date.strftime('%d-%m-%y') %></dd>
+    <dt><b>Quarto:</b></dt>
+    <dd><%= reservation.room.name %></dd>
 
-      <dt><b>Data de Saída:</b></dt>
-      <dd><%= reservation.end_date.strftime('%d-%m-%y') %></dd>
+    <dt><b>Data de Entrada:</b></dt>
+    <dd>
+      <%= reservation.start_date.strftime('%d-%m-%y') %> as
+      <%= reservation.guesthouse.check_in.strftime("%H:%M") %>
+    </dd>
+  
+    <dt><b>Data de Saída:</b></dt>
+    <dd>
+      <%= reservation.end_date.strftime('%d-%m-%y') %> as
+      <%= reservation.guesthouse.check_out.strftime("%H:%M") %>
+    </dd>
 
-      <dt><b>Hóspedes:</b></dt>
-      <dd><%= reservation.guests_number %> Pessoas</dd>
+    <dt><b>Hóspedes:</b></dt>
+    <dd><%= reservation.guests_number %> Pessoas</dd>
 
-      <dt><b>Total:</b></dt>
-      <dd>R$ <%= reservation.total_price %></dd>
-
-      <div><%= button_to 'Cancelar', cancel_reservation_path(reservation), method: :patch %></div>
-    </dl>
-    <br>
-  <% end %>
-
-</div>
+    <dt><b>Total:</b></dt>
+    <dd>R$ <%= reservation.total_price %></dd>
+  </dl>
+  <br>
+<% end %>

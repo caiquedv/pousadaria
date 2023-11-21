@@ -18,9 +18,10 @@ Rails.application.routes.draw do
     get '/reservations/new_reservation', to: 'reservations#reservation_with_auth', as: 'reservation_with_auth'
   end
 
-  resources :reservations, only: [:index] do 
+  resources :reservations, only: [:index, :show] do 
     member do
       patch :cancel
+      patch :check_in
     end
   end
 end

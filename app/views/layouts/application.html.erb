@@ -18,6 +18,8 @@
       <% if current_user.host? && current_user.guesthouse %>
         
         <%= link_to 'Minha Pousada', guesthouse_path(current_user.guesthouse.id) %>
+        <%= link_to 'Reservas', reservations_path %>
+        <%= link_to 'Estadias Ativas', reservations_path(only_active: true) %>
 
       <% elsif current_user.guest? %>
 
