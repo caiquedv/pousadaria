@@ -31,4 +31,19 @@ Rails.application.routes.draw do
   end
 
   resources :reviews, only: [:index]
+
+  namespace :api do 
+    namespace :v1 do
+      resources :guesthouses, only: [:index, :show] do
+        resources :rooms, only: [:index]
+      end
+      
+      resources :rooms, only: [] do
+        post 'availability', on: :member
+      end
+    end
+  end
+
+
+
 end

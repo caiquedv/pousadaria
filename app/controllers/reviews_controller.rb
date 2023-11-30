@@ -32,7 +32,6 @@ class ReviewsController < ApplicationController
       .joins(reservation: { room: :guesthouse })
       .where(rooms: { guesthouse_id: current_user.guesthouse.id })
       .order(created_at: :desc)
-      p @reviews
     elsif current_user.guest?
       @reviews = Review.joins(:reservation)
                       .where(reservations: { user_id: current_user.id })

@@ -7,7 +7,7 @@ class Review < ApplicationRecord
       .where.not(rate: nil)
       .average(:rate)
       
-      rating ? rating.round(0) : 'Aínda não há avaliações'
+      rating ? rating.round(0) : ''
   end
   
 end

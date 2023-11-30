@@ -12,7 +12,7 @@ describe 'User edit guesthouse' do
       usage_policy: 'Uma política de uso bem legal', check_in: '14:00', check_out: '12:00', user: host
     )
 
-    PaymentMethod.create!(name: 'Débito') # tornar obrigartorio no cadastro <---------
+    PaymentMethod.create!(name: 'Débito')
     PaymentMethod.create!(name: 'Dinheiro')
 
     # Act
