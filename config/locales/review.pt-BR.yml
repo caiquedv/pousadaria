@@ -1,0 +1,8 @@
+pt-BR:
+  activerecord:
+    models:
+      review:
+    attributes:
+      review:
+        rate: Nota
+        message: Mensagem

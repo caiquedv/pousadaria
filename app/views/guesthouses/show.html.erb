@@ -11,6 +11,21 @@
   <% @guesthouse.payment_methods.each do |method| %>
     <%= method.name %>
   <% end %>
+
+  <strong>Nota média: <%= @rating %></strong>
+
+  <div class="last-reviews">
+    <h3>Últimas avaliações</h3>
+
+    <% @last_three_reviews.each do |review| %>
+      <p><strong>Nota:</strong> <%= review.rate %></p>
+      <p><strong>Mensagem:</strong> <%= review.message %></p>
+      <hr>
+    <% end %>
+
+    <%= link_to 'Ver todas as avaliações', guesthouse_reviews_path(@guesthouse) %>
+
+  </div>
 </div> <br>
 
 <div>
@@ -21,6 +36,8 @@
     <%= render 'rooms/room_details', room: room %>
 
     <%= link_to 'Reservar', guesthouse_room_path(@guesthouse, room) %>
+
+    <br><br>
 
     <% end %>
   <% end %>

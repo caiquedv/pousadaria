@@ -79,7 +79,7 @@ describe 'User view guesthouse details' do
     visit guesthouse_path(guesthouse.id)
 
     # Assert
-    within('h3') { expect(page).to have_content 'Quartos disponíveis' }
+    expect(page).to have_content 'Quartos disponíveis'
     expect(page).to have_content room.name
     expect(page).to have_content room.description
     expect(page).to have_content "#{room.dimension} m2"

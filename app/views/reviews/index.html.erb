@@ -1,0 +1,28 @@
+<div>
+  <% @reviews.each do |review| %>
+  
+  <dl>
+    <dt>Reserva:</dt>
+    <dd><%= review.reservation.code %></dd>
+
+    <dt>Pousada:</dt>
+    <dd><%= review.reservation.guesthouse.brand_name %></dd>
+
+    <dt>Quarto:</dt>
+    <dd><%= review.reservation.room.name %></dd>
+
+    <dt>Nota:</dt>
+    <dd><%= review.rate %></dd>
+
+    <dt>Mensagens:</dt>    
+    <dd><%= review.message %></dd>
+    <% review.reservation.reviews.each do |review| %>
+      <dd><%= review.message if review.rate.nil? %></dd>
+    <% end %>
+
+    <%= link_to 'Responder', new_reservation_review_path(review.reservation.id, reply: true) %>
+  </dl>
+  <br>
+
+  <% end %>
+</div>

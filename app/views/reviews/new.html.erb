@@ -1,0 +1,16 @@
+<%= form_with model: [@reservation, @review], url: reservation_reviews_path(@reservation) do |f| %>
+
+<% if !@reply %>
+  <%= f.label :rate %>
+  <%= f.number_field :rate, min: 1, max: 5 %>
+
+<% else %>
+  <%= f.hidden_field :reply, value: true  %>
+<% end %>
+
+<%= f.label :message %>
+<%= f.text_area :message %>
+
+<%= f.submit 'Enviar' %>
+
+<% end %>

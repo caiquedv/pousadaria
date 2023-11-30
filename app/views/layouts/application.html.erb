@@ -26,6 +26,8 @@
         <%= link_to 'Minhas Reservas', reservations_path %>
 
       <% end %>
+
+      <%= link_to 'Avaliações', reviews_path %>
       
       <%= button_to 'Sair', destroy_user_session_path, method: :delete %> 
     <% else %>

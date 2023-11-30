@@ -32,6 +32,15 @@ class GuesthousesController < ApplicationController
     load_payment_methods
   end
 
+  def show
+    @rating = Review.average_rating_for_guesthouse(@guesthouse.id)
+    @last_three_reviews = Review.joins(reservation: { room: :guesthouse })
+                                .where(rooms: { guesthouse_id: @guesthouse.id })
+                                .where.not(rate: nil)
+                                .order(created_at: :desc)
+                                .limit(3)
+  end
+
   def update
     if @guesthouse.update(guesthouse_params)
       redirect_to guesthouse_path(@guesthouse), notice: 'Pousada atualizada com sucesso.'

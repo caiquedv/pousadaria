@@ -1,4 +1,4 @@
-<h2>Reserva: <%= @reservation.code %></h2>
+<h2>Reserva: <%= @reservation.code %> - <%= @reservation.status %></h2>
 <dl>
   <dt><b>Quarto:</b></dt>
   <dd>
@@ -34,6 +34,16 @@
 
 <div>
   <%= button_to 'Fazer Check-out', check_out_reservation_path(@reservation), method: :get %>
+</div>
+
+<% end %>
+
+<br>
+
+<% if current_user.guest? && @reservation.finished? %>
+
+<div>
+  <%= button_to 'Avaliar', new_reservation_review_path(@reservation), method: :get %>
 </div>
 
 <% end %>

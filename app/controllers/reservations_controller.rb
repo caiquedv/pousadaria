@@ -13,8 +13,8 @@ class ReservationsController < ApplicationController
       else
         guesthouse = current_user.guesthouse
         @reservations = Reservation.joins(:room)
-                                  .where(rooms: { guesthouse_id: guesthouse.id })
-                                  .where(status: :pending)
+                                   .where(rooms: { guesthouse_id: guesthouse.id })
+                                   .where(status: :pending)
         
         @title = 'Reservas'
       end
@@ -87,11 +87,11 @@ class ReservationsController < ApplicationController
         @reservation.update(status: :cancelled)
         redirect_to reservations_path, notice: 'Reserva cancelada com sucesso.'
       else
-        flash.now[:alert] = 'Não foi possível cancelar a reserva.'
+        flash[:alert] = 'Não foi possível cancelar a reserva.'
         redirect_to reservations_path
       end
     else
-      flash.now[:alert] = 'Não foi possível cancelar a reserva.'
+      flash[:alert] = 'Não foi possível cancelar a reserva.'
       redirect_to reservations_path
     end
     

@@ -8,17 +8,20 @@ Rails.application.routes.draw do
 
   resources :guesthouses, only: [:new, :create, :show, :edit, :update] do
     resources :rooms, only: [:new, :create, :show]
+    resources :reviews, only: [:index]
   end
 
   resources :rooms, only: [:index, :edit, :update] do 
     resources :seasonal_rates, only: [:new, :create]
     
     resources :reservations, only: [:new, :create]
-    get '/reservations/verify_reservation', to: 'reservations#verify_reservation', as: 'verify_reservation'
-    get '/reservations/new_reservation', to: 'reservations#reservation_with_auth', as: 'reservation_with_auth'
+    get '/verify_reservation', to: 'reservations#verify_reservation', as: 'verify_reservation'
+    get '/new_reservation', to: 'reservations#reservation_with_auth', as: 'reservation_with_auth'
   end
 
   resources :reservations, only: [:index, :show] do 
+    resources :reviews, only: [:new, :create]
+
     member do
       patch :cancel
       patch :check_in
@@ -26,4 +29,6 @@ Rails.application.routes.draw do
       patch :finish
     end
   end
+
+  resources :reviews, only: [:index]
 end
