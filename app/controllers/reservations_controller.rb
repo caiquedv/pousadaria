@@ -14,7 +14,7 @@ class ReservationsController < ApplicationController
         guesthouse = current_user.guesthouse
         @reservations = Reservation.joins(:room)
                                    .where(rooms: { guesthouse_id: guesthouse.id })
-                                   .where(status: :pending)
+                                   .where.not(status: [:active])
         
         @title = 'Reservas'
       end

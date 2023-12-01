@@ -33,7 +33,7 @@ class Reservation < ApplicationRecord
   def check_availability
     overlapping_reservations = Reservation.where(room_id: room_id)
                               .where.not(id: id)
-                              .where.not(status: :cancelled)
+                              .where.not(status: [:cancelled, :finished])
                               .where('start_date < ? AND end_date > ?', end_date, start_date)
 
     errors.add(:base, 'O quarto não está disponível para o período selecionado.') if overlapping_reservations.any?

@@ -1,6 +1,7 @@
 first_host = User.create!(role: :host, name: 'Erika Campos', email: 'erika@email.com', password: 'password')
 second_host = User.create!(role: :host, name: 'Claudia Capelini', email: 'claudia@email.com', password: 'password')
 third_host = User.create!(role: :host, name: 'André Kanamura', email: 'andre@email.com', password: 'password')
+fourth_host = User.create!(role: :host, name: 'Paulo', email: 'paulo@email.com', password: 'password')
 
 PaymentMethod.create!(name: 'Pix')
 PaymentMethod.create!(name: 'Dinheiro')
@@ -26,8 +27,16 @@ third_guesthouse = Guesthouse.create!(
   brand_name: 'Arco-Íris', corporate_name: 'Íris Ltda', tax_code: '35.541.346/0001-81', phone: '11 97777-7777',
   email: 'arcoiris@email.com', address: 'Av. Paulista, 820', district: 'Bairro das Cores', state: 'SP',
   city: 'São Paulo', postal_code: '03736-200', description: 'Hotéis urbanos', accepts_pets: false, 
-  usage_policy: 'Política de Uso', check_in: '17:00', check_out: '15:00', active: false, 
+  usage_policy: 'Política de Uso', check_in: '17:00', check_out: '15:00', active: true, 
   payment_method_ids: [2, 3], user: third_host
+)
+
+inactive_guesthouse = Guesthouse.create!(
+  brand_name: 'Arco-Íris', corporate_name: 'Íris Ltda', tax_code: '35.541.346/0001-81', phone: '11 97777-7777',
+  email: 'arcoiris@email.com', address: 'Av. Paulista, 820', district: 'Bairro das Cores', state: 'SP',
+  city: 'São Paulo', postal_code: '03736-200', description: 'Hotéis urbanos', accepts_pets: false, 
+  usage_policy: 'Política de Uso', check_in: '17:00', check_out: '15:00', active: false, 
+  payment_method_ids: [2, 3], user: fourth_host
 )
 
 first_guesthouse_room_one = Room.create!(
@@ -98,6 +107,34 @@ Room.all.each do |room|
     description: 'Feriado', start_date: 2.days.from_now, end_date: 6.days.from_now,
     daily_rate: 450
   )
-
-
 end
+
+first_guest = User.create!(
+  name: 'João Almeida', email: 'joao@email.com', password: 'password', role: :guest, social_security_number: '546.396.043-78'
+)
+
+second_guest = User.create!(
+  name: 'Gabriel Campos', email: 'gabriel@email.com', password: 'password', role: :guest, social_security_number: '046.886.021-67'
+)
+
+first_guesthouse_room_one.reservations.create!(
+  start_date: Time.zone.now, end_date: 3.days.from_now, guests_number: 2, status: 'finished', total_price: 300,
+  user: first_guest, code: 'AWAWS1S1'
+)
+
+Reservation.last.reviews.create!(rate: 4, message: "Bom quarto")
+Reservation.last.reviews.create!(message: "Obrigado!")
+
+first_guesthouse_room_two.reservations.create!(
+  start_date: Time.zone.now, end_date: 3.days.from_now, guests_number: 2, status: 'finished', total_price: 300,
+  user: second_guest, code: 'R2D2R2D2'
+)
+
+Reservation.last.reviews.create!(rate: 5, message: "Ótimo quarto")
+Reservation.last.reviews.create!(message: "Volte sempre!")
+
+first_guesthouse_room_two.reservations.create!(
+  start_date: Time.zone.now, end_date: 3.days.from_now, guests_number: 2, total_price: 1400, code: 'A2A2B2B2',
+  status: 'active', checked_in_at: Time.zone.now, user: second_guest
+)
+

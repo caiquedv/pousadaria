@@ -10,10 +10,9 @@
   <strong>Forma de Pagamento:</strong> 
   <% @guesthouse.payment_methods.each do |method| %>
     <%= method.name %>
-  <% end %>
+  <% end %> <br>
 
-  <strong>Nota média: <%= @rating %></strong>
-
+  <strong>Nota média: </strong>  <%= @rating.blank? ? 'Não avaliado' : @rating %>
   <div class="last-reviews">
     <h3>Últimas avaliações</h3>
 
